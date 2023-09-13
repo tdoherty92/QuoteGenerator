@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 var quotes = [
   [
@@ -51,31 +51,27 @@ var quotes = [
 
 // at next commit add this image as background not the random colour https://miro.medium.com/v2/resize:fit:500/1*bJQ3_EwhKwpgQ31gqZ1_pg.jpeg
 
-class QuoteParent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      quote: quotes[0]
-    };
+function QuoteParent() {
+  
+  const [quote, setQuote] = useState(quotes[0]);
+      
 
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  getQuote() {
+  const getQuote = () => {
     let key = Math.floor(Math.random() * 12);
-    return quotes[key];
+    setQuote(quotes[key]);
   }
+  // need to add onClick into the JSX
 
-  handleClick() {
-    const randomQuote = this.getQuote();
-    this.setState({
-      quote: randomQuote
-    });
-  }
+  // const randomQuote = () => {
+  // }this.getQuote();
+  //  this.setState({
+  //    quote: randomQuote
+  //  });
+  
 
   // get a colour to set into the background and possibly the social icons, get new quote button
 
-  randomColor() {
+  const randomColor = () => {
     const color = `rgb(
       ${Math.floor(Math.random() * 155)},
       ${Math.floor(Math.random() * 155)},
@@ -83,8 +79,8 @@ class QuoteParent extends React.Component {
     return color;
   }
 
-  render() {
-    const { title } = this.props;
+  
+    const title = "Stoic Quote Generator";
 
     return (
       <div className="container">
@@ -93,38 +89,39 @@ class QuoteParent extends React.Component {
           <p>
             {
               <Quote
-                displayColor={this.randomColor}
-                handleClick={this.handleClick}
-                {...this.state}
+                displayColor={randomColor}
+                quote={quote}
+                newQuote={getQuote}
               />
             }
           </p>
         </div>
       </div>
     );
-  }
+  
 }
 
-class Quote extends React.Component {
-  createTweetLink() {
-    let ahref = ["https://twitter.com/intent/tweet?text=", this.props.quote];
+function Quote({displayColor, quote, newQuote}) {
+  
+  const createTweetLink = () => {
+    let ahref = ["https://twitter.com/intent/tweet?text=", quote];
     return ahref.join("");
   }
-  render() {
-    const randomColor = this.props.displayColor();
-    const html = document.documentElement;
-    html.style.backgroundColor = randomColor;
+  
+  const randomColor = displayColor;
+  const html = document.documentElement;
+  html.style.backgroundColor = randomColor;
 
     return (
       <div>
-        <h1 id="text">"{this.props.quote[0]}"</h1>
-        <h3 id="author">{this.props.quote[1]}</h3>
-        <button id="new-quote" onClick={this.props.handleClick}>
+        <h1 id="text">"{quote[0]}"</h1>
+        <h3 id="author">{quote[1]}</h3>
+        <button id="new-quote" onClick={newQuote}>
           More Wisdom
         </button>
         <br />
         <a
-          href={this.createTweetLink()}
+          href={createTweetLink()}
           target="_blank"
           className="checkbox"
           id="tweet-quote"
@@ -133,7 +130,7 @@ class Quote extends React.Component {
         </a>
       </div>
     );
-  }
+  
 }
 
 export default QuoteParent;
