@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import './App.css'
 
 var quotes = [
   [
@@ -10,7 +11,7 @@ var quotes = [
     "Marcus Aurelius"
   ],
   [
-    "If it is not right do not do it; if it is not true do not say it.",
+    "If it is not right, do not do it. if it is not true, do not say it.",
     "Marcus Aurelius"
   ],
   [
@@ -30,8 +31,8 @@ var quotes = [
     "Epictetus"
   ],
   [
-    "It’s not what happens to you, but how you react to it that matters.",
-    "Epictetus"
+    "I'll consider it a compliment if you actually inspect my code in enough detail to find this.",
+    "Thomas Doherty"
   ],
   [
     "It’s not because things are difficult that we dare not venture. It’s because we dare not venture that they are difficult.",
@@ -57,7 +58,7 @@ function QuoteParent() {
       
 
   const getQuote = () => {
-    let key = Math.floor(Math.random() * 12);
+    let key = Math.floor(Math.random() * 13);
     setQuote(quotes[key]);
   }
   // need to add onClick into the JSX
@@ -69,7 +70,11 @@ function QuoteParent() {
   //  });
   
 
-  // get a colour to set into the background and possibly the social icons, get new quote button
+/* next commit:  
+remove the box and put the new quote below the skull; quote sits on top of the skull so no box disrupting it anymore.
+
+*/
+
 
   const randomColor = () => {
     const color = `rgb(
@@ -78,12 +83,14 @@ function QuoteParent() {
       ${Math.floor(Math.random() * 155)})`;
     return color;
   }
-
   
     const title = "Stoic Quote Generator";
 
     return (
       <div className="container">
+        <div id="background">
+          <img src="https://miro.medium.com/v2/resize:fit:500/1*bJQ3_EwhKwpgQ31gqZ1_pg.jpeg" className="stretch" alt=""/>
+        </div>
         <div className="content" id="quote-box">
           <h1>{title}</h1>
           <p>
@@ -108,7 +115,7 @@ function Quote({displayColor, quote, newQuote}) {
     return ahref.join("");
   }
   
-  const randomColor = displayColor;
+  var randomColor = displayColor;
   const html = document.documentElement;
   html.style.backgroundColor = randomColor;
 
